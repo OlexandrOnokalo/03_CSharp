@@ -46,11 +46,34 @@ Console.Readline()!;
 
 int number = int.Parse(str); 
 
-!!!! $ you  !!!!! - інтерполяція
+Console.WriteLine($"Number {numberStr}"); - інтерполяція
 
 
+Console.OutputEncoding = Encoding.Unicode;
+                \'      – single quote, needed for character literals
+                \"      – double quote, needed for string literals
+                \\      – backslash
+                \0      – Unicode character 0
+                \a      – Alert (character 7)
+                \b      – Backspace (character 8)
+                \f      – Form feed (character 12)
+                \n      – New line (character 10)
+                \r      – Carriage return (character 13)
+                \t      – Horizontal tab (character 9)
+                \v      – Vertical quote (character 11)
+                \uxxxx  – Unicode escape sequence for character with hex value xxxx   
+	
+cw + TAB - Console.WriteLine("")
+Console.Readline()!;
 
+            //изменяет цвет фона
+            Console.BackgroundColor = ConsoleColor.Green;
+            //изменяет цвет текста                      
+            Console.ForegroundColor = ConsoleColor.Magenta;
+			Console.ResetColor();
 
+DateTime now = DateTime.Now;
 
+========================================================
 
 		
