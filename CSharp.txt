@@ -1,0 +1,56 @@
+01_IntroToDotNet
+
+
+Credential Manager
+
+C# - побудована і працює на платформі .NET
+
+.NET Core дозволяє створюватти кросплатформенні додатки
+
+C#  - це чисто ПОО мова програмування
+
+Середовища виконання: Command lengauge Run Time (CLR)
+CLR - менеджер між нашими класами, бібліотеками і операційною системою. Виділяє і чистить память.
+
+
+
+visual studio installer -> modify -> .net deskstop development -> instal
+
+cw + TAB - Console.WriteLine("") - вивести на екран
+
+C# data types  - static
+	Value types  -  unNullable 
+		Simple types (int, float, char, bool
+		enum, 
+		struct 
+		
+	Reference Rypes - dynamic - Nullable 
+		Class, array, interface, delegate
+		
+Типи данних:
+	Цілі:
+		byte  	 0 > 255
+		sbyte	-128>127
+		short	-32 768 > 32767
+		ushort  0>65535
+		int		
+		uint
+		long
+		ulong
+	Дробові:
+		float   - float h = 3.14f;
+		double
+		decimal   -  decimal p = 5.64m;
+		
+Console.Readline()!;
+
+int number = int.Parse(str); 
+
+!!!! $ you  !!!!! - інтерполяція
+
+
+
+
+
+
+		
