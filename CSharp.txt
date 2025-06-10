@@ -1,5 +1,5 @@
 01_IntroToDotNet
-
+ 
 
 Credential Manager
 
@@ -73,6 +73,27 @@ Console.Readline()!;
 			Console.ResetColor();
 
 DateTime now = DateTime.Now;
+
+cw + TAB - Console.WriteLine("") - вивести текст
+Console.Write($"Number {i + 1}: "); - без переходу на новий рядок
+	$"..." — це рядкова інтерполяція: дозволяє вставляти значення змінних або виразів прямо всередину рядка.
+	Усередині фігурних дужок {} можна писати змінні або вирази.
+string input = Console.ReadLine(); - зчитати текст
+numbers[i] = int.Parse(Console.ReadLine()); - int.Parse — перетворює рядок у ціле число
+char[] reversed = input.ToCharArray();  - Перетворюємо рядок у масив символів
+int[] numbers = new int[5]; - массив
+
+	foreach (int num in numbers)
+        {
+		sum += num;
+        product *= num;
+        if (num < min) min = num;
+        if (num > max) max = num;
+        }
+
+
+
+
 
 ========================================================
 
