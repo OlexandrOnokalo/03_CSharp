@@ -9,7 +9,7 @@ C# - побудована і працює на платформі .NET
 
 C#  - це чисто ПОО мова програмування
 
-Середовища виконання: Command lengauge Run Time (CLR)
+Середовища виконання: Command langauge Run Time (CLR)
 CLR - менеджер між нашими класами, бібліотеками і операційною системою. Виділяє і чистить память.
 
 
@@ -31,14 +31,14 @@ C# data types  - static
 	Цілі:
 		byte  	 0 > 255
 		sbyte	-128>127
-		short	-32 768 > 32767
+		short	int16   -32 768 > 32767 
 		ushort  0>65535
-		int		
-		uint
-		long
+		int		- int32
+		uint	
+		long	-int64
 		ulong
 	Дробові:
-		float   - float h = 3.14f;
+		float (single)   - float h = 3.14f;
 		double
 		decimal   -  decimal p = 5.64m;
 		
@@ -79,8 +79,8 @@ Console.Write($"Number {i + 1}: "); - без переходу на новий р
 	$"..." — це рядкова інтерполяція: дозволяє вставляти значення змінних або виразів прямо всередину рядка.
 	Усередині фігурних дужок {} можна писати змінні або вирази.
 string input = Console.ReadLine(); - зчитати текст
-numbers[i] = int.Parse(Console.ReadLine()); - int.Parse — перетворює рядок у ціле число
-char[] reversed = input.ToCharArray();  - Перетворюємо рядок у масив символів
+numbers[i] = int.Parse(Console.ReadLine())!; - int.Parse — перетворює рядок у ціле число
+
 int[] numbers = new int[5]; - массив
 
 	foreach (int num in numbers)
@@ -96,5 +96,55 @@ int[] numbers = new int[5]; - массив
 
 
 ========================================================
+02_Array
 
-		
+Array - батьківський клас всіх масивів. Зберігаються в динамічній памяті
+
+Створення нового масиву
+Пустий масив:
+	int[] arr = new int[8];
+Пусті комірки зайняті нулями
+
+int[]arr2 = new int[] {1,2,3,4,5}; - список інізіалізації, саме рахує кількість елементів, можна сайз не вказувати
+
+	int []arr4 = [10,20,30]; - коротший варінт
+	
+	arr5.SetValue(77,2;
+	
+	for може редагувати, лізе в кожну комірку по індексу
+	
+	foreach (var elem in arr5) - може тільки виводити, бо кожне значення копіює в змінну елем, немає доступу до оригіналу, і є готовий інумінатор
+
+Двовимірний масив:
+	int[,] array = new int [3,3];
+	
+	array.Length - загальна кількійсть комірок
+	array.GetLength(0) - показує довжину рядка
+
+є тровимірні і так далі
+
+Рваний масив (зубчастий) - двовимірний масив - є рядочкі, але в рідках різна кількість комірок
+	int[][] jagged = new int[3][];
+
+	int[] temparr = (int[]) arr.Clone(); - клонування масива
+
+        Random random = new Random();
+        double res = random.Next(100) + random.NextDouble();
+        Console.WriteLine(res);
+
+		res = Math.Round(res, 2);
+        Console.WriteLine(res);
+
+
+static function?
+abstruct ?
+
+	
+	
+	
+	
+	
+
+
+
+
