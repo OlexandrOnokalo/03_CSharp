@@ -132,7 +132,7 @@ int[]arr2 = new int[] {1,2,3,4,5}; - список інізіалізації, с
         double res = random.Next(100) + random.NextDouble();
         Console.WriteLine(res);
 
-		res = Math.Round(res, 2);
+		res = Math.Round(res, 2); - обрізати до 2 символів після коми
         Console.WriteLine(res);
 
 
