@@ -140,11 +140,59 @@ static function?
 abstruct ?
 
 	
+========================================================
+03_String
+	
+	string[] array = { "Hello", "From", "Summer", "Sun", "Tree", "Lake" };
+	
+	string message = string.Join(" - ", array); - з масиву стрінг у одну стрінгу
+	
+	string []splictArr = message.Split(new string[] {" - "}, StringSplitOptions.None); - просто порізати по розділювачу
+	
+	string []words = htmlMessage.Split(new char[] { ' ', '.', ',', '!', '/', '-', '?' }, StringSplitOptions.RemoveEmptyEntries); - порізати по купі розділювачів, і з опцією не враховувати пробіли 
+	
+	ConsoleKeyInfo key =  Console.ReadKey(); - бере один "ключ" - кнопку на клавіатурі
+	if(key.Key == ConsoleKey.F12) - от тут нажата ф12
+
+	if (string.IsNullOrEmpty(nullStr) або просто посилання, або стрінга створена з "" (тобто пуста)
+	if (string.IsNullOrWhiteSpace(str2)) - або просто посилання або пробіли
+	
+Зрівнюємо 2 стрінги
+	
+	if (string.Compare(str11, str12) == 0)
+	
+String Contains String
+
+    string str3 = "This is testing";
+    if (str3.Contains("test"))	
+	
+Вирізати частину тексту
+	string substr = str4.Substring(23); - з 23 індексу до кінця
+	string substr = str4.Substring(23,5); - з 23 індексу 5 символів
+	
+Зєднуємо стрінги з массиву в одну
+            string[] starray = new string[]{"Down, the way nights, are dark",
+                                            "And the sun shines daily on the mountain top",
+                                            "I took, a trip, on,a sailing ship",
+                                            "And when I reached Jamaica",
+                                            "I made a stop"};
+
+            string str5 = string.Join("!\n", starray);
+	
+Конкатанація (додавання)
+            string s1 = "hello";
+            string s2 = "world";
+            string s3 = s1 + " " + s2; // = string "hello world"
+	
+03_02_StringBuilder
+
+	StringBuilder stringBuilder = new StringBuilder(); - кожен раз як не влазить новий розмір зарезервованих комірок в 2 р більше
+
+	Console.WriteLine("Capacity : " + stringBuilder.Capacity); - кількість зарезервованих комірок
+	Console.WriteLine("Length : " + stringBuilder.Length); - кількість зайнятих комірок
+	
+	stringBuilder.Append("Hello"); - додаємо в кінець
+	stringBuilder.AppendLine("Hello"); - додає і в кінці \n
+
 	
 	
-	
-	
-
-
-
-
