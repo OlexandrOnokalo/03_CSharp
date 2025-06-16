@@ -194,5 +194,102 @@ String Contains String
 	stringBuilder.Append("Hello"); - додаємо в кінець
 	stringBuilder.AppendLine("Hello"); - додає і в кінці \n
 
+========================================================
+04_IntroToOOP
+
+class - можливість зробити свій тип данних
+
+	private, public, protected - так само як на С++
+	internal - дає доступ тільки до цього класу тільки в цьому проєкту
+	protected internal - наслідники в межах цієї збірки (проекта)
 	
-	
+class Point
+{
+	private int numder;   (для кожної змінної прописуємо 
+
+}
+дочірній клас:
+class Child: Point  (public по замовчуванні і змінити не можеш)
+
+
+
+	class Point
+{
+		private int numder;   (для кожної змінної прописуємо 
+		private string name;
+		privat const float PI=3.14f;   - не можна інізіалізувати в 	конструкторі
+		private readonly int id = 1; - можна інізіалізатувати в конструкторі
+
+}
+
+
+
+partial class Point : Object - в любому випадку батьківський класс обж, партіал дає можливість розділити класс на частини
+
+
+
+fullproperty ---> propfull + Tab
+
+
+
+partial class Point
+    {
+        private int xCoord;   - приватна змінна
+ 
+        public int XCoord      - проперті до цієї змінної (
+        {
+            get { return xCoord; }
+            set
+            {
+                if (value >= 0)			- перевірка для сеттера
+                    xCoord = value;
+                else
+                    xCoord = 0;
+            }
+        }
+        private int yCoord;
+        public int YCoord
+        {
+            get { return yCoord; }
+            set
+            {
+                if (value >= 0)
+                    yCoord = value;
+                else
+                    yCoord = 0;
+            }
+        }
+
+автопроперті:
+Auto property ---> prop + Tab
+
+public string Name { get; set; } - автопроперті
+		
+		
+		
+		
+		
+		public void Print()  - принт по старинці
+        {
+            Console.WriteLine($"X : {xCoord}, Y : {yCoord}");
+            //Console.SetCursorPosition(xCoord, yCoord); Console.WriteLine("*");
+        }
+        public override string ToString() - перевантажена функція від батьківського классу
+        {
+            return $"X : {xCoord}, Y : {yCoord}";
+        }
+		
+		
+		    p.XCoord = 1000;   //value = 1000 - setter
+            Console.WriteLine(p.XCoord);    //getter
+		
+		
+
+struct NewPoint { -  структура не може мати наслідників
+
+
+поділ на файли
+partial - дозволяє ділити класси на частини
+
+
+
