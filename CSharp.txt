@@ -447,40 +447,200 @@ using A;   - підключяаємо просто цей нейспейс А
 07_OverloadOperator
 
 
-_3dpoint
+    class _3D_Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+		.........
 
 
+       class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Point() : this(0, 0) { }
 
-class Point
-{
-	public int X ...
-	public int Y...
+        public Point(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+        public override string ToString()
+        {
+
+            return $"X: {X}. Y : {Y}";
+        }
+
+        public override bool Equals(object? obj) - наводим на слово клас, лампоча і пункт меню
+        {
+
+            return obj is Point point &&
+                   X == point.X &&
+                   Y == point.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
+
+        // ref and out not allowed
+        //public static return_type operator [symbol](parameters )
+        //{
+        //code
+        //}
+		
+		
+		
+			Унарні оператори
+			-	не змінює оригінал а повертає новий поінт
+		
+			
+        public static Point operator -(Point point)
+        {
+            Point res = new Point
+            {
+                X = -point.X,
+                Y = -point.Y
+            };
+            return res;
+        }
+        public static Point operator ++(Point point)    -завжди міняє оригінал, виводить ++point (все одно спрацьовує префіксна форма, навіть коли вказується point++
+        {
+            //a++
+            //a = a + 1
+            point.X++;
+            point.Y++;
+            return point;
+        }
+        public static Point operator --(Point point)
+        {
+            point.X--;
+            point.Y--;
+            return point;
+        }
+
+        
+			Бінарні оператори
+		
+		
+        public static Point operator +(Point p1, Point p2)
+        {
+            Point res = new Point
+            {
+                X = p1.X + p2.X,
+                Y = p1.Y + p2.Y
+            };
+            return res;
+        }
+        public static Point operator -(Point p1, Point p2)
+        {
+            Point res = new Point
+            {
+                X = p1.X - p2.X,
+                Y = p1.Y - p2.Y
+            };
+            return res;
+        }
+        public static Point operator *(Point p1, Point p2)
+        {
+            Point res = new Point
+            {
+                X = p1.X * p2.X,
+                Y = p1.Y * p2.Y
+            };
+            return res;
+        }
+        public static Point operator /(Point p1, Point p2)
+        {
+            Point res = new Point
+            {
+                X = p1.X / p2.X,
+                Y = p1.Y / p2.Y
+            };
+            return res;
+        }
+        
+        
+			Оператори порівняння < >  <= >=
+			
+					
+        public static bool operator <(Point p1, Point p2)
+        {
+            return p1.X + p1.Y < p2.X + p2.Y;
+        }
+        
+        public static bool operator >(Point p1, Point p2)   - для перезавантаження треба зробити ще оператор >, вони працюють в парі
+        {
+            //return p1.X + p1.Y > p2.X + p2.Y;
+            return !(p1 < p2);
+        }
+        public static bool operator <=(Point p1, Point p2)
+        {
+            return p1.X + p1.Y <= p2.X + p2.Y;
+        }
+        
+        public static bool operator >=(Point p1, Point p2)
+        {
+            //return p1.X + p1.Y > p2.X + p2.Y;
+            return !(p1 <= p2);
+        }
+
+		
+		
+			Оператори рівності ==, !=
+			
+
+        public static bool operator ==(Point p1, Point p2)
+        {
+            return p1.Equals(p2);
+        }
+
+        public static bool operator !=(Point p1, Point p2)
+        {
+            return !(p1 == p2);
+        }
+
+
+			true/false operators
+			
+        public static bool operator true(Point p)
+        {
+            return p.X != 0 || p.Y != 0;
+        }
+        //in pair
+        public static bool operator false(Point p)
+        {
+            return p.X == 0 && p.Y == 0;
+        }
+
+			Overload types - перезавантаження типів даних
+			
+			
+        public static implicit operator int(Point p)
+        {
+            return p.X+ p.Y ;
+        }
+        public static explicit operator double(Point p)
+        {
+            return p.X + p.Y;
+        }
+        public static explicit operator _3D_Point(Point p)  -   _3d_Point це і назва оператора і результат ретурна
+        {
+            return new _3D_Point(p.X, p.Y, 100);
+        }
+        #endregion
+    }
 	
-	перезавантажений оператор + СТАТИЧНИЙ (не має this)
-	public static return_type operator +(parameters)
-	
 
-!!!!!!!!!! тут про оператори описати
 
- унарний -	не змінює оригінал а повертає новий поінт
- унарний ++   - завжди міняє оригінал, виводить ++point (все одно спрацьовує префіксна форма, навіть коли вказується point++
- 
- бінарний
- 
- порівняння
- 
-		<  - для перезавантаження треба зробити ще оператор >, вони працюють в парі
- 
- рівності
- 
-	true/false  - також працюють тільки в парі
-	
-  overload types - перезавантаження типів даних
-	
-			3d...     -   _3d_Point це і назва оператора і результат ретурна
+
+
+
 			
 			
 
 	
-
+чат жпт не має бути value
 
