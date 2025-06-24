@@ -23,96 +23,118 @@ namespace _06_Exception
     //цілі числа і оператор*. Для обробки помилок введення
     //використовуйте механізм виключень.
 
+    using System;
+
     class CreditCard
     {
         private string number;
-
         public string Number
         {
             get { return number; }
-            set 
+            set
             {
-                if (number.Length == 16)
+                if (!string.IsNullOrWhiteSpace(value) && value.Length == 16)
                 {
                     number = value;
                 }
                 else
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Card number must be exactly 16 digits.");
                 }
             }
         }
-        private string name;
 
+        private string name;
         public string Name
         {
             get { return name; }
-            set {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     name = value;
                 }
+                else
+                {
+                    throw new ArgumentException("Cardholder name cannot be empty.");
+                }
             }
-                
         }
-        
-        private string? cvc;
 
-        public string? Cvc
+        private string cvc;
+        public string Cvc
         {
             get { return cvc; }
             set
             {
-                if (number.Length == 3)
+                if (!string.IsNullOrWhiteSpace(value) && value.Length == 3)
                 {
-                    number = value!;
+                    cvc = value;
                 }
                 else
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("CVC must be exactly 3 digits.");
                 }
             }
         }
-        private DateTime data;
 
+        private DateTime data;
         public DateTime Data
         {
             get { return data; }
-            set {
+            set
+            {
                 if (value > DateTime.Now)
                 {
                     data = value;
                 }
                 else
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Expiration date must be in the future.");
                 }
-             
-                
-                 
-            
             }
         }
-
-
-
-
-
-
     }
-
 
     internal class Program
     {
-
         static void Main(string[] args)
         {
+            
             try
             {
-                Console.WriteLine("Enter number: ");
-                int n = int.Parse(Console.ReadLine()!);
-                Console.WriteLine(n);
-               
+                Console.Write("Enter a number: ");
+                string input = Console.ReadLine()!;
+                int result = int.Parse(input);
+                Console.WriteLine($"Parsed number: {result}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Error: Number is too large or too small for type int.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Invalid number format.");
+            }
+
+            
+            try
+            {
+                CreditCard creditCard = new CreditCard();
+
+                Console.Write("Enter 16-digit card number: ");
+                creditCard.Number = Console.ReadLine()!;
+
+                Console.Write("Enter cardholder name: ");
+                creditCard.Name = Console.ReadLine()!;
+
+                Console.Write("Enter 3-digit CVC: ");
+                creditCard.Cvc = Console.ReadLine()!;
+
+                Console.Write("Enter expiration date (yyyy-MM-dd): ");
+                creditCard.Data = DateTime.Parse(Console.ReadLine()!);
+
+                Console.WriteLine("Card added successfully.");
             }
             catch (Exception ex)
             {
@@ -120,21 +142,25 @@ namespace _06_Exception
             }
 
             
-                try
+            try
+            {
+                Console.Write("Enter a math expression (e.g. 3*2*4): ");
+                string expression = Console.ReadLine()!;
+                string[] parts = expression.Split('*');
+
+                int result = 1;
+                foreach (string part in parts)
                 {
-                    CreditCard creditCard = new CreditCard();
-                    creditCard.Data = DateTime.Parse(Console.ReadLine());
-                }
-                catch (Exception ex)
-                {
-
-                    Console.WriteLine($"Error: {ex.Message}");
+                    result *= int.Parse(part.Trim());
                 }
 
-
-
-
-
+                Console.WriteLine($"Result: {result}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
     }
+
 }
