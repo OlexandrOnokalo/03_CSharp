@@ -357,8 +357,61 @@ namespace _07_OverloadOperator
 
         static void Main(string[] args)
         {
+            
+            Square s1 = new Square(4);
+            Square s2 = new Square(2);
+            Square s3 = s1 + s2;
+            Square s4 = s1 - s2;
+            Square s5 = s1 * s2;
+            Square s6 = s1 / s2;
+            s1++;
+            s2--;
+            Console.WriteLine("Squares:");
+            Console.WriteLine($"s1: {s1}");
+            Console.WriteLine($"s2: {s2}");
+            Console.WriteLine($"s3 (s1 + s2): {s3}");
+            Console.WriteLine($"s4 (s1 - s2): {s4}");
+            Console.WriteLine($"s5 (s1 * s2): {s5}");
+            Console.WriteLine($"s6 (s1 / s2): {s6}");
+            Console.WriteLine($"s1 == s2: {s1 == s2}");
+            Console.WriteLine($"s1 != s2: {s1 != s2}");
+            Console.WriteLine($"s1 > s2: {s1 > s2}");
+            Console.WriteLine($"s1 < s2: {s1 < s2}");
+            Console.WriteLine($"(int)s1: {(int)s1}");
+            Console.WriteLine($"(double)s1: {(double)s1}");
+            Rectangle rectFromSquare = (Rectangle)s1;
+            Console.WriteLine($"Rectangle from square: {rectFromSquare}");
+            if (s1)
+                Console.WriteLine("s1 is true");
 
+            
+            Rectangle r1 = new Rectangle(3, 5);
+            Rectangle r2 = new Rectangle(1, 2);
+            Rectangle r3 = r1 + r2;
+            Rectangle r4 = r1 - r2;
+            Rectangle r5 = r1 * r2;
+            Rectangle r6 = r1 / r2;
+            r1++;
+            r2--;
+            Console.WriteLine("\nRectangles:");
+            Console.WriteLine($"r1: {r1}");
+            Console.WriteLine($"r2: {r2}");
+            Console.WriteLine($"r3 (r1 + r2): {r3}");
+            Console.WriteLine($"r4 (r1 - r2): {r4}");
+            Console.WriteLine($"r5 (r1 * r2): {r5}");
+            Console.WriteLine($"r6 (r1 / r2): {r6}");
+            Console.WriteLine($"r1 == r2: {r1 == r2}");
+            Console.WriteLine($"r1 != r2: {r1 != r2}");
+            Console.WriteLine($"r1 > r2: {r1 > r2}");
+            Console.WriteLine($"r1 < r2: {r1 < r2}");
+            Console.WriteLine($"(int)r1: {(int)r1}");
+            Console.WriteLine($"(double)r1: {(double)r1}");
+            Square squareFromRect = (Square)r1;
+            Console.WriteLine($"Square from rectangle: {squareFromRect}");
+            if (r1)
+                Console.WriteLine("r1 is true");
         }
+
     }
 }
 
