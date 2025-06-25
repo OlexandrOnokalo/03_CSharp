@@ -634,13 +634,148 @@ using A;   - підключяаємо просто цей нейспейс А
     }
 	
 
+========================================================
+08_01_Inheritance
+Наслідування
+
+Питання - чи являється?
+Лев являється твариною? Так
+велосипед являється твариною? ні
+
+В C# не підтримує множинне наслідування, клас може мати тільки один батьківській клас
+
+new DateTime();  -  save 01.01.0001
+DataTime.Now  - це час на данний момент
 
 
+abstract class Person  (завжди є наслідником Object) - абстрактний класс (не можна створювати обєкт)
+
+sealed - забороняє перевизначати наслідниками цього методу
+	print 
+        
+		//abstract method the same  void DoWork() = 0;
+		
+        public abstract void DoWork();
+		- асбтрактний метод (пустий де немає ніякої реалізації)
 
 
+///
+class Name : BaseClass, Interface1, (батьківський клас тільки один, інтерфейсів може бути безліч)
+///
+
+class sealed Name: worker  сиалед- забороняє унаслідувати цей клас
+
+class Worker : Person  -  наслідування за персон
+{
+	....
+
+        public Worker(string name, DateTime b, int salary):base(name, b)
+        {
+            Salary = salary;
+        }  - конструттор з делегуванням до батьківського класу, по ключовому слові бейс
+	
+        public override void DoWork()  - - override писати обовязково
+        {
+            Console.WriteLine("Doing some work....");
+        }
+        // new  - create new member and stop virtual
+        //override - перевизначаємо метод батьківського класу
+		
+        public override void Print()
+        {
+            base.Print();
+            Console.WriteLine($"Salary : {Salary}");
+        }
+    
+	- base.Print(); - делегуємось до батьківського клас. 
+	
+class Programmer : Worker  
+...
+
+class TeamLead : Programmer
+        public override void DoWork()
+        {
+            Console.WriteLine("Manage team project!!!");
+        }
+
+
+main 
+	
+            // ----------- 3 - use IS and AS
+
+            if (persons[1] is Programmer)
+            {
+                pr = persons[1] as Programmer;
+                pr.DoWork();
+            }
+            else
+            { Console.WriteLine("Object is null"); }
 			
-			
+			-якщо він реально є програмістом, то виконується код   
+	
+	
+	
+property не може бути virtual 
+
+Механізм пізнього зв'язування (Late Binding) у C# — це можливість викликати методи або отримувати властивості об’єкта під час виконання програми (runtime), а не під час компіляції (compile-time). У C# пізнє зв’язування реалізується через ключове слово dynamic або інтерфейс System.Reflection.
+
+
+========================================================
+08_02_Indexers
+Індекскатор
+
+
+class Laptop 
+		...
+		
+class Shops
+{
+	Laptop[] laptops;
+	
+	!!!!!
+
+
+        public Laptop this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < laptops.Length)
+                {
+                    return laptops[index];
+                }
+                throw new IndexOutOfRangeException();
+            }
+            set
+            {
+                if (index >= 0 && index < laptops.Length)
+                {
+                    laptops[index] = value;
+                }
+            }
+        }
+		- двохсторонній
+		-value це new Laptop і тд
+		
+        public Laptop this[string name]
+        {
+            get 
+            {
+                foreach (var l in laptops)
+                {
+                    if(l.Model == name)
+                        return l;
+                }
+                return null;
+            }  
+			- по назві
+	
 
 	
-чат жпт не має бути value
+
+
+	
+	
+
+
+
 
