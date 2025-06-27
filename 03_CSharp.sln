@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07_OverloadOperator", "07_O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08_Inheritance_Indexer", "08_Inheritance_Indexer\08_Inheritance_Indexer.csproj", "{6BAEFA48-5F70-4C70-AB45-145655C5DBD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09_Interfaces", "09_Interfaces\09_Interfaces.csproj", "{515042F8-9D89-4A48-A070-6443A5FAC5A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{6BAEFA48-5F70-4C70-AB45-145655C5DBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BAEFA48-5F70-4C70-AB45-145655C5DBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BAEFA48-5F70-4C70-AB45-145655C5DBD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515042F8-9D89-4A48-A070-6443A5FAC5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515042F8-9D89-4A48-A070-6443A5FAC5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515042F8-9D89-4A48-A070-6443A5FAC5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515042F8-9D89-4A48-A070-6443A5FAC5A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
