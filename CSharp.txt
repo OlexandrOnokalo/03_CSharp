@@ -822,11 +822,11 @@ class Administrator : Employee, IWorkable, IManager
 
 main 
 {		інтерефейсне посилання - дає доступ тільки до методів іменежер
-	IManager director = new Director 
-	{
-	!!!!!!!!
-	}
-	director.    - берем змінні або методи тільки від ІМанажер
+	IManager director = new Director - має доступ тільки до методів і змінних IMnager
+	
+	(бо Director director = new Director - дає доступ до всього)
+	
+	
 	
 	director.ListOfWorkers = new List<Employee> { ....}
 	
@@ -844,12 +844,197 @@ main
 		
 }
 
+========================================================
+10_StandartInterfaces
+Стандартні інтерфейси
 
+    class StudentCard :ICloneable 
+    {
+        public int Number { get; set; }
+        public string Series { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return $"Students Card : {Number} . {Series}";
+        }
+    }
+
+ class Student : IComparable<Student>, ICloneable 
+    {
+	
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime Birthdate { get; set; }
+        public StudentCard StudentCard { get; set; }
+
+        public object Clone() - скопіювати обєктор
+        {
+            temp.StudentCard =(StudentCard) this.StudentCard.Clone();
+            return temp;
+        }
+       public int CompareTo(Student? other) - зрівнюємо
+        {
+            return FirstName.CompareTo(other!.FirstName);
+        }
+
+        public override string ToString()
+        {
+            return $"Fullname : {FirstName} {LastName}. Birthdate : " +
+                $"{Birthdate.ToLongDateString()}. {StudentCard.ToString()}";
+        }
+    }
+
+    class Auditory : IEnumerable
+    {
+    
+        Student[] students;
+        public Auditory()
+        {
+            students = [
+                new Student
+                {
+                     FirstName = "Ivan",
+                     LastName = "Popchuk",
+                     Birthdate = new DateTime(2000,12,7),
+                     StudentCard = new StudentCard { Number = 123456, Series = "AAA" }
+                },
+                 new Student
+                {
+                     FirstName = "Olga",
+                     LastName = "Oliunuk",
+                     Birthdate = new DateTime(2005,12,7),
+                     StudentCard = new StudentCard { Number = 111111, Series = "BB" }
+                },
+                  new Student
+                {
+                     FirstName = "Mukola",
+                     LastName = "Ivanchuk",
+                     Birthdate = new DateTime(1999,8,17),
+                     StudentCard = new StudentCard { Number = 222222, Series = "CC" }
+                },
+                   new Student
+                {
+                     FirstName = "Mira",
+                     LastName = "Polishuk",
+                     Birthdate = new DateTime(2002,12,7),
+                     StudentCard = new StudentCard { Number = 333333, Series = "DD" }
+                },
+                    new Student
+                {
+                     FirstName = "Yura",
+                     LastName = "Popchuk",
+                     Birthdate = new DateTime(2001,12,7),
+                     StudentCard = new StudentCard { Number = 444444, Series = "FF" }
+                }
+            ];
+        }
+
+        public IEnumerator GetEnumerator()    - вказуємо що від арея брати інумінатор
+        {
+            return students.GetEnumerator();  - ми берем від студентів інумінатор (смарт поінт), для того щоб можна було форічем
+        }
+
+        public void Print()
+        {
+            foreach (Student st in students)
+            {
+                Console.WriteLine(st);
+            }
+        }
+        public void Sort() - для стандартного сортування від арей
+        {
+            Array.Sort(students); 
+        }
+        public void Sort(IComparer<Student> comparer) - для іншого сортування, IComparer<Student> або IComparer<Student>
+        {
+            Array.Sort(students,comparer);
+        }
+    }	
+    class LastNameComparer : IComparer<Student> - створюємо comparer
+    {
+        
+        public int Compare(Student? x, Student? y)
+        {
+            return x!.LastName.CompareTo(y!.LastName);
+        }
+    }
+    class BirthdateComparer : IComparer<Student> створюємо comparer
+    {
+        public int Compare(Student? x, Student? y)
+        {
+            return x!.Birthdate.CompareTo(y!.Birthdate);
+        }
+    }
+	
+    internal class Program
+    {
+        static void Main(string[] args)
+        {	
+			Auditory auditory = new Auditory();
+			
+            foreach (Student st in auditory) - для цього ми в класі аудиторія робили гет інумінатор (смарт поінтер)
+            {
+                Console.WriteLine(st.ToString());
+            }			
+	
+            Console.WriteLine("-------------- Sort array -------------");
+            auditory.Sort(); - 	звичайне сортування від арей
+            foreach (Student st in auditory)
+            {
+                Console.WriteLine(st.ToString());
+            }	
+            Console.WriteLine("-------------- Sort array by last name -------------");
+            auditory.Sort(new LastNameComparer()); 
+			
+			- робимо новий обєкт comparer і передаємо його одразу в функцію Sort(IComparer<Student> comparer)
+			
+            foreach (Student st in auditory)
+            {
+                Console.WriteLine(st.ToString());
+            }
 
 
 	
+
+може бути може не бути - агрегація
+має обовязково бути - композиція
+так от тут StudentCard має бути обовязково
+
+
+
+
+========================================================
+10_01
+
+Enum  - набір цілочисельний констант 
+
+
+
+    enum DayOfWeek//const int Monday = 0, Tuesday = 1 і тд
+    {
+        Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+    }
 	
+	
+main 
+
+            string[] names = Enum.GetNames(typeof(DayOfWeek));
+            foreach (var item in names)  
+            {
+                Console.WriteLine(item);
+            }  - вивід назв в енамі
 
 
+            DayOfWeek[] values = (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek));
 
-
+            foreach (DayOfWeek item in values)
+            {
+                Console.WriteLine($"{item} - {(int)item}");
+            } - вивід чисел в енамі 
+	
+	
