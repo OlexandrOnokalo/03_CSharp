@@ -1037,4 +1037,99 @@ main
                 Console.WriteLine($"{item} - {(int)item}");
             } - вивід чисел в енамі 
 	
+========================================================
+11_Delegates
+
+Вказівники на функцію
+
+Делегат - це ссилочний тип який дозволяє зберігати посилання на методи або функції заданої сигнатури. Це иакож "класс", але єдине що може - зберігати посилання
+
+Сигнатура =  прототип  - void Print() 
+
+Назва методу без () це завжди адреса
+
+Перше, специфікатор доступу
+тип повернення
+
+те саме що public class VoidDElegate : MulticastDelegate 
+
+от так:
+
+public delegate void VoidDelegate();
+
+
+
+public void Print(string str) {}
+робимо делегат:
+
+public delegate void SetStringDelegate(string s);
+на делегат можна записати декількох методів, аби тип повернення був такий же і тип кількість аргументів. 
+Назва методу і назва делегату немає значення
+
+DoubleDelegate delog = SuperClass.GetKoef; - вказівник на фунццію, тип данних DoubleDelegate - це створений нами делегат з певним типом повернення і кількістью аргументів
+
+Делегати необхідність для віконних додатків. Ми не можемо передбачити що вибере користувач.
+
+На кожну кнопку має бути делігат, який зберігає посилання на метод, що має запуститись
+
+deleg?.Invoke() - перевірка на null
+
+
+робимо масив делегатів:
+
+DoublDelegate [] doubleDelegate = new DoubleDelegate[2[ {
+	SuperClass.GetKoef,
+	superClass.GetNumber
+}
+
+SetStringDelegate setString = new SetStringDelegate(superClass.Print);
+setString.Invoke("Hello");
+
+VoidDelegate voidDelegate = super.DoWork; - записали один метод
+VoidDelegate.Invoke();  - запустили посилання
+
+Записати пару методів на один делегат:
+
+voidDelegate += superClass.Test;  - обєднуються разом в перший делегат
+
+voidDelegate.Invoke(); - запустились обидва методі в делегаті
+
+
+Лямбда вирази
+
+
+public delegate int ChangeDelegate(int a);
+
+static void ChangeArr(int[]arr)
+{
+	for	(int i = 0; i<arr.Length; i++)
+	{
+		arr[i] = change(arr[i]);
+	}
+}
+static int SQRT(n)
+{...}
+
+
+main
+
+	int[] arr = new int {...}
+	ChangeArr(arr,SQRT); - в функцію ченж вставив функцію яку використовувати
 	
+Анонімний делегат - anonymus delegate
+
+	ChangeArr(arr, delegate (int n) {return n*n;});
+	
+lambda expresion - лямбда вирази
+
+	ChangeArr(arr, (n)=> n*n);
+	
+	
+	
+
+
+
+
+
+
+
