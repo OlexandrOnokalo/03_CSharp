@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10_StandartInterfaces", "10
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11_Delegates", "11_Delegates\11_Delegates.csproj", "{2D65EDBC-49DB-414C-9923-93A41A9800AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12_EventCallBackFunction", "12_EventCallBackFunction\12_EventCallBackFunction.csproj", "{84BFD8C0-9BBA-40A9-8150-666342B68830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12_01_ExtensionMetod", "12_01_ExtensionMetod\12_01_ExtensionMetod.csproj", "{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{2D65EDBC-49DB-414C-9923-93A41A9800AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D65EDBC-49DB-414C-9923-93A41A9800AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D65EDBC-49DB-414C-9923-93A41A9800AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84BFD8C0-9BBA-40A9-8150-666342B68830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84BFD8C0-9BBA-40A9-8150-666342B68830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84BFD8C0-9BBA-40A9-8150-666342B68830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84BFD8C0-9BBA-40A9-8150-666342B68830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

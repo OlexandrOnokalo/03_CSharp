@@ -1125,9 +1125,72 @@ lambda expresion - лямбда вирази
 	ChangeArr(arr, (n)=> n*n);
 	
 	
+========================================================
+12_EventCallBackFunction
+
+CallBackFunction - це передача в метод делегата, який має запуститись в кінці нашого методу
+
+	HardWork(delegate () {Console.WriteLine("Good");});
+
+Коли відбувається подія, ПІДПИСНИК на неї реагує
+
+
+
+		private делегат + public event
+		
+	public event ExamDelegate ExamDelegate;
+
+
+Подія
+Event - Створює приватний делегат і дає публічний доступ через += і -=. Іншими словами, беспечний делегат.
+
+
+main
+	
+	можемо в делегат додавляти чи видаляти методи завдяки += і -=
+	
+Розгорнутий ивент - full property
+
+
+        private ExamDelegate _examDelegate;
+        public event ExamDelegate ExamEvent
+        {
+            add 
+            { 
+                _examDelegate += value;
+                Console.WriteLine(value.Method.Name + " was added");
+            }
+            remove 
+            { 
+                _examDelegate -= value;
+                Console.WriteLine(value.Method.Name + " was removed");
+            }
+        }
 	
 
+public Action TestEvent; - це вбудованний варінт делегата
+========================================================
+12_01_ExtensionMetod
 
+Метод розширення - це 
+
+
+Нам треба в бібліотеку додати свій метод, щоб він відображався як з тої бібліотеки
+
+Для додавання методу до стрінги
+
+static class ExampleExtension
+	{
+		public static int NumberWords(this string data)
+		{
+			тут описуємо потрібний функціонал
+		}	
+	}
+
+	і тепер моє можливість визивати str.NumberWords
+	
+	
+	
 
 
 
