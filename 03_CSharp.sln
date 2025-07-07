@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12_EventCallBackFunction", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12_01_ExtensionMetod", "12_01_ExtensionMetod\12_01_ExtensionMetod.csproj", "{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14_Dictionary", "14_Dictionary\14_Dictionary.csproj", "{F33AEA51-C088-47DB-91BF-7B468A3CC205}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A74A07E-6C1D-4F08-B7B4-A0509AA94856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F33AEA51-C088-47DB-91BF-7B468A3CC205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F33AEA51-C088-47DB-91BF-7B468A3CC205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F33AEA51-C088-47DB-91BF-7B468A3CC205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F33AEA51-C088-47DB-91BF-7B468A3CC205}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
