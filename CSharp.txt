@@ -1374,36 +1374,99 @@ FileShare - режим спільного користування
 або краще використовувати юсінг. В дужках створюємо класс і працюємо всередині функції, потім сам юзінг і почистить память. Робимо запис в файл з стрінги, перетвоючі її в байти
 
 
-using(FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.none))
-	{
-		byte[] writeBites = Encoding.Default.GetBytes(writeText);
-		fs.Write(writeBites, 0, wriyeBites.Length);
+
+	write file:
+
+        static void WriteFile(string path)
+        {
+			using(FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.none))
+	       using (FileStream fs = new FileStream(path, FileMode.Create, 
+                FileAccess.Write,FileShare.None))
+            {
+
+                Console.WriteLine("Enter some text : ");
+                string writeText = Console.ReadLine();
+
+                byte[] writeBites = Encoding.Default.GetBytes(writeText);
+                fs.Write(writeBites,0, writeBites.Length);
+
+                Console.WriteLine("File was recorded!!!!");
 	
 	}
-
-		read File ?????????????
-		
+        static string ReadFile(string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Open,
+                FileAccess.Read))
+            {
+                byte[]readBytes = new byte[fs.Length];
+                fs.Read(readBytes, 0, readBytes.Length);
+                return Encoding.Default.GetString(readBytes);
+            }
+        }
 		
 	А це вже стрінга без перетворення на байти	
-		writeTextForm???????????
+	
+        static void WriteTextFormat(string path)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.Write("Hello!");
+                sw.Write("Hello!");
+                sw.Write("Hello!");
+                sw.Write("Hello!");
+                sw.WriteLine("How are you?");
+                sw.WriteLine("How are you?");
+                sw.WriteLine("How are you?");
+            }
+        }
+        static void ReadTextFormat(string path)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                //sr.Read();
+                //sr.ReadBlock();
+                //sr.ReadLine();
+                //sr.ReadToEnd();
 
-	readtextformat?????????????
+                while (!sr.EndOfStream)
+                {
+                    Console.WriteLine(sr.ReadLine() + "!!!");
+                }
+            }
+        }
 
-
-
-FileWrite ?????? - і відкрило і записало і закрило  - це по стринзі
+File.WriteAllText(@"test3.txt", "Hello"); - і відкрило і записало і закрило  - це по стринзі
 
 
 Binary Writer, Binary Reading
-	
-	FileStream file = File.Create(@????????
-	BinaryWriter writer
-	???
-		file.open
-		??????????
 
+            //file = File.Create(@"test1.txt");
+
+    
+            //// 1.
+            //var writer = new StreamWriter(file);
+            //writer.Write("Hello");
+            //writer.WriteLine("\tworld");
+            //writer.Close();
+            //file?.Close(); // null-conditional operator
+
+            //// 2.
+            //writer = File.CreateText(@"test2.txt");
+            //writer.WriteLine("Hello");
+            //writer.Close();
+
+            //// 3.
+            //File.WriteAllText(@"test3.txt", "Hello");
+			
+do
+{
+
+	DirectoryInfo dir = new DirectoryInfo(path);
+	???????
+	
 	
 
+}
 
 
 
