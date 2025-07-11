@@ -1302,6 +1302,14 @@ Stack<T>
 Queue<T>
 LinkedList<T>
 
+що можна зробити генерік:
+class
+Structures
+Collestion
+Method
+interfase
+delegate
+
 	Робимо делегат дженеріком (шаблонним)
 
 public delegate Type SummaTemplate<Type>(Type a, Type b);
@@ -1330,27 +1338,70 @@ class Point<T1,T2> where T1:
             Console.WriteLine(obj.ToString());
         }
 	
-	
-	
+========================================================
+16_WorkWithFile
 
-Створіть generic-версію методу обчислення макси-
-муму з трьох чисел.
-Завдання 2
-Створіть generic-версію методу обчислення мінімуму
-з трьох чисел.
-Завдання 3
-Створіть generic-версію методу пошуку суми елемен-
-тів у масиві.
-Завдання 4
-Створіть generic-клас «Стек». Реалізуйте стандартні
-методи і властивості для роботи стеку:
-■ pop;
-■ push;
-■ peek;
-■ count.
+Робота з файлами
+
+System IO - дає нам класи, делегати, енами для роботи з файлами
+
+Головний класс:
+
+Stream =>
+	FileStream
+	MemoryStream
+	BufferesStream
+
+	static void WriteFile(string path)
+	{
+		FileStream fileStream = new FileStream("text.txt, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read | FileShare.Write);
+		
+		try{
+			doing...
+		}
+		finally
+		{
+			FileStream.Close();
+		}
+		
+	}
 
 
+FileMode - вибір методу роботи з файлом
+FileAccess - вид доступу
+FileShare - режим спільного користування
+
+або краще використовувати юсінг. В дужках створюємо класс і працюємо всередині функції, потім сам юзінг і почистить память. Робимо запис в файл з стрінги, перетвоючі її в байти
+
+
+using(FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.none))
+	{
+		byte[] writeBites = Encoding.Default.GetBytes(writeText);
+		fs.Write(writeBites, 0, wriyeBites.Length);
 	
+	}
+
+		read File ?????????????
+		
+		
+	А це вже стрінга без перетворення на байти	
+		writeTextForm???????????
+
+	readtextformat?????????????
+
+
+
+FileWrite ?????? - і відкрило і записало і закрило  - це по стринзі
+
+
+Binary Writer, Binary Reading
+	
+	FileStream file = File.Create(@????????
+	BinaryWriter writer
+	???
+		file.open
+		??????????
+
 	
 
 
