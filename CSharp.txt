@@ -1463,10 +1463,242 @@ do
 
 	DirectoryInfo dir = new DirectoryInfo(path);
 	???????
+}
+
+
+========================================================
+17_01_Attributes
+Атрибути
+
+Додаткові дані що ставляться у квадратних дужках перед классом
+
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Class)] - вказується де цей атрибут можна використовувати
+
+class CoderAttribute : Attribute    - тепер це клас атрибут
+
+	public string Name
 	
+	public Data Time
+	
+		
+
+[Obsolete] - застарілий, він не є актуальним і його не варто використовутати
+
+[Serializable] - помічає клас таким, який можна сиролізувати
+
+
+main 
+
+            Console.WriteLine("Attributes of class Employee");
+            foreach (var item in typeof(Employee).GetCustomAttributes(true))
+            {
+                Console.WriteLine(item);
+            } - достає всі атриьбути в чьому атрибуті
+	
+            Console.WriteLine("Attributes of members of class Employee"); 
+            foreach (MemberInfo item in typeof(Employee).GetMembers()) - всі мембери (всі сетери гетери, змінні, проперті)
+            {
+                Console.WriteLine("\t" + item.ToString());
+                foreach (var attr in item.GetCustomAttributes<CoderAttribute>(true)) - все що є в мемберах ( у кожного проперті і або метода може бути всередині ще атрибут
+                {
+                    Console.WriteLine("\t\t" + attr);
+                }
+            }
+
+
+========================================================
+17_2_BinarySerialize
+
+
+Серіалізація - це процес збереження стану обєкта в будь якому потоці з можливістю його відновлення. 
+Беремо обєкт, перетворюємо в масив байтів, і записуємо до файлу
+
+бінарна серіалізація вимагає атрибут [Serializable], а не скрізь його можна указати
+
+
+========================================================
+17_3_XML_JsonSerialization
+
+в XML or JSON, не треба ставити атрибут [Serializable]
+
+main
+
+            List<Person> persons = new List<Person>()
+            {
+              new Person(123654){ Name="Jack", Age = 15},
+              new Person(123654){ Name="Tom", Age = 12},
+              new Person(123654){ Name="Bill", Age = 35},
+              new Person(123654){ Name="John", Age = 47}
+            };
+            string fileName = "Person.json";
+            string jsonString = JsonSerializer.Serialize(persons);
+            File.WriteAllText(fileName, jsonString);
+
+
+            List<Person> newPersons = null;
+            jsonString = File.ReadAllText(fileName);
+            newPersons = JsonSerializer.Deserialize<List<Person>>(jsonString)!;
+         
+            foreach (var item in newPersons)
+            {
+                Console.WriteLine(item);
+            }
+
+========================================================
+17_4_DataAnnotation
+
+Data Annotation - дозволяють перевіряти проперті коли вони валідні
+
+реално використовуються 
+	Атрибути 
+	серіалізація
+
+    class User
+    {
+        [Required(ErrorMessage ="Id not defined")]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage ="Name not setted")]
+        [StringLength(50,MinimumLength =3, ErrorMessage = "Wrong lenght")]
+        public string Name { get; set; }
+        [Required(ErrorMessage ="Age not setted")]
+        [Range(1,125,ErrorMessage ="Wrong age")]
+        public int Age { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        public string Login { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required]
+        [Compare(nameof( Password),ErrorMessage ="Not confirm password")]
+        public string ConfirmPassword { get; set; }
+        [Phone]
+        public string Phone { get; set; }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            User user = new User();
+            bool isValid = true;
+            do
+            {
+                Console.WriteLine("Enter name:");
+                string name = Console.ReadLine()!;
+
+                Console.WriteLine("Enter age");
+                int age = int.Parse(Console.ReadLine()!);
+
+                Console.WriteLine("Enter Login");
+                string login = Console.ReadLine()!;
+
+                Console.WriteLine("Enter password");
+                string password = Console.ReadLine()!;
+
+                Console.WriteLine("Confirm password");
+                string confirmPassword = Console.ReadLine()!;
+
+                Console.WriteLine("Enter email");
+                string email = Console.ReadLine()!;
+
+                Console.WriteLine("Enter phone");
+                string phone = Console.ReadLine()!;
+
+
+                user.Id = 1;
+                user.Name = name;
+                user.Age = age;
+                user.Password = password;
+                user.ConfirmPassword = confirmPassword;
+                user.Email = email;
+                user.Phone = phone;
+                user.Login = login;
+
+
+
+
+                var result = new List<ValidationResult>();
+                var context = new ValidationContext(user);
+                if (!(isValid = Validator.TryValidateObject(user, context, result, true)))
+                {
+                    foreach (ValidationResult error in result)
+                    {
+                        Console.WriteLine(error.MemberNames.FirstOrDefault() + ": " + error.ErrorMessage);
+                    }
+                }
+
+
+            } while (!isValid);
+
+            Console.WriteLine("Model is valid");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ДР
+
+валідація на емейл - додаткові 12
+телефон - валідація саме на український формат
+
+
+1. Реалізувати додаток з наступним функціоналом:
+a)Консольне меню
+b)В якості колекції для даних використати Словник
+(Dictionary<TKey, TValue>), який реалізує CRUD
+c) Значущими елементами словника є екземпляри класу User
+
+2. Класс User повинен містити наступні властивості:
+a) Id - int унікальні значення в діапазоні 1000 - 9999
+b) Login - string, лише друємі символи без спец сиволів
+c) Password - string, лише друємі символи без спец сиволів,
+довжина не менше 8ми сиволів,
+d) ConfirmPassword - string, лише друємі символи без спец
+сиволів, довжина не менше 8ми сиволів,
+e) E-mail - string, валідація згідно загальних правил
+стандарту
+f) CreditCard - валідація згідно загальних правил стандарту
+g)Phone - валідація згідно українського формату +38-0**-
+***-**-**
+
+3. Всі властивості містять відповідні атрибути валідації, з
+перевизначиними повідомленнями, згідно яких модель після перевірки записується в словник . Якщо якісь властивості не
+проходять валідацію - користувач змушений ввести їх
+повторно.
+
+4. Після вибору відповідного пункту меню екземпляр словника
+серіалізується і зберігається у файл. (робиться резервна копія)
+
+5. Після вибору відповідного пунктуц меню дані з файлу
+читаються і десеріалізуються переписуючи поточний
+екземпляр.
+
+
+
+
+
+
+
+
+
+
 	
 
-}
+
+
+
+
 
 
 
