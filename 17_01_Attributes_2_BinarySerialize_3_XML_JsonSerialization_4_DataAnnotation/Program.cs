@@ -1,76 +1,169 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+
 
 namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnnotation
 {
-    //    1. Реалізувати додаток з наступним функціоналом:
-
-    //a)Консольне меню
-    //b)В якості колекції для даних використати Словник
-    //(Dictionary<TKey, TValue>), який реалізує CRUD
-    //c) Значущими елементами словника є екземпляри класу User
-
-    //2. Класс User повинен містити наступні властивості:
-    //a) Id - int унікальні значення в діапазоні 1000 - 9999
-    //b) Login - string, лише друємі символи без спец сиволів
-    //c) Password - string, лише друємі символи без спец сиволів,
-    //довжина не менше 8ми сиволів,
-    //d) ConfirmPassword - string, лише друємі символи без спец
-    //сиволів, довжина не менше 8ми сиволів,
-    //e) E-mail - string, валідація згідно загальних правил
-    //стандарту
-    //f) CreditCard - валідація згідно загальних правил стандарту
-    //g)Phone - валідація згідно українського формату +38-0**-
-    //***-**-**
-
-    //3. Всі властивості містять відповідні атрибути валідації, з
-    //перевизначиними повідомленнями, згідно яких модель після
-    //перевірки записується в словник.Якщо якісь властивості не
-    //проходять валідацію - користувач змушений ввести їх
-    //повторно.
-
-    //4. Після вибору відповідного пункту меню екземпляр словника
-    //серіалізується і зберігається у файл. (робиться резервна копія)
-
-    //5. Після вибору відповідного пунктуц меню дані з файлу
-    //читаються і десеріалізуються переписуючи поточний
-    //екземпляр.
-
-
     [Serializable]
-    class User
+    public class User
     {
-        [Range(1000,9999)]
+        [Range(1000, 9999, ErrorMessage = "Id must be between 1000 and 9999.")]
         public int Id { get; set; }
 
-        [Required] 
+        [Required(ErrorMessage = "Login is required.")]
+        [RegularExpression(@"^[\w\d]+$", ErrorMessage = "Login must contain only printable characters without special symbols.")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
+        [MinLength(8, ErrorMessage = "Password must be at least 8 characters.")]
+        [RegularExpression(@"^[\w\d]+$", ErrorMessage = "Password must contain only printable characters without special symbols.")]
         public string Password { get; set; }
 
-        [Required]
-        [Compare(nameof(Password), ErrorMessage = "Not confirm password")]
+        [Required(ErrorMessage = "Confirm password is required.")]
+        [Compare(nameof(Password), ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [EmailAddress]
+        [Required(ErrorMessage = "Email is required.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
 
-        [CreditCard]
+        [Required(ErrorMessage = "Credit card is required.")]
+        [RegularExpression(@"^\d{16}$", ErrorMessage = "Credit card must contain 16 digits.")]
         public string CreditCard { get; set; }
 
-        [Phone]
+        [Required(ErrorMessage = "Phone is required.")]
+        [RegularExpression(@"^\+38-0\d{5}-\d{2}-\d{2}$", ErrorMessage = "Phone must match format +38-0*****-**-**")]
         public string Phone { get; set; }
 
+        public override string ToString()
+        {
+            return $"Id: {Id}, Login: {Login}, Email: {Email}, Phone: {Phone}, CreditCard: {CreditCard}";
+        }
     }
-
-
-
 
     internal class Program
     {
+        static Dictionary<int, User> users = new Dictionary<int, User>();
+        static string filePath = "users.json";
+
+
+
+        static void AddUser()
+        {
+            User user = new User();
+
+            user.Id = ReadValidated<int>("Enter Id: ", user, nameof(User.Id));
+
+            if (users.ContainsKey(user.Id))
+            {
+                Console.WriteLine("User with this Id already exists.");
+                return;
+            }
+
+            user.Login = ReadValidated<string>("Enter Login: ", user, nameof(User.Login));
+            user.Password = ReadValidated<string>("Enter Password: ", user, nameof(User.Password));
+            user.ConfirmPassword = ReadValidated<string>("Confirm Password: ", user, nameof(User.ConfirmPassword));
+            user.Email = ReadValidated<string>("Enter Email: ", user, nameof(User.Email));
+            user.CreditCard = ReadValidated<string>("Enter Credit Card (16 digits): ", user, nameof(User.CreditCard));
+            user.Phone = ReadValidated<string>("Enter Phone (+38-0*****-**-**): ", user, nameof(User.Phone));
+
+            users.Add(user.Id, user);
+            Console.WriteLine("User added successfully.");
+        }
+
+        static T ReadValidated<T>(string prompt, User user, string propertyName)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+
+                try
+                {
+                    var prop = typeof(User).GetProperty(propertyName);
+                    object value = typeof(T) == typeof(int) ? int.Parse(input) : input;
+                    prop.SetValue(user, value);
+
+                    var context = new ValidationContext(user) { MemberName = propertyName };
+                    Validator.ValidateProperty(value, context);
+                    return (T)value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+        }
+
+        static void ShowAllUsers()
+        {
+            if (users.Count == 0)
+            {
+                Console.WriteLine("User list is empty.");
+                return;
+            }
+
+            foreach (var user in users.Values)
+                Console.WriteLine(user);
+        }
+
+        static void SaveUsers()
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(filePath, json);
+                Console.WriteLine("Users saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving users: {ex.Message}");
+            }
+        }
+
+        static void LoadUsers()
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("File not found.");
+                    return;
+                }
+
+                string json = File.ReadAllText(filePath);
+                users = JsonSerializer.Deserialize<Dictionary<int, User>>(json);
+                Console.WriteLine("Users loaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading users: {ex.Message}");
+            }
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            LoadUsers();
+
+            while (true)
+            {
+                Console.WriteLine("\n1 - Add User");
+                Console.WriteLine("2 - Show All");
+                Console.WriteLine("3 - Save");
+                Console.WriteLine("4 - Load");
+                Console.WriteLine("5 - Exit");
+                Console.Write("Choose option: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1": AddUser(); break;
+                    case "2": ShowAllUsers(); break;
+                    case "3": SaveUsers(); break;
+                    case "4": LoadUsers(); break;
+                    case "5": return;
+                    default: Console.WriteLine("Invalid option."); break;
+                }
+            }
         }
     }
 }
