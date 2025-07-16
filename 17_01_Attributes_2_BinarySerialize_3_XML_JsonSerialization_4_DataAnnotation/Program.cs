@@ -47,6 +47,32 @@ namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnno
         public delegate void SetterDelegate(User user, object value);
         public delegate object ParserDelegate(string input);
 
+        
+
+        static object ReadValidated(string prompt, User user, SetterDelegate setter, ParserDelegate parser, string propertyName)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+
+                try
+                {
+                    object value = parser(input);
+                    setter(user, value);
+
+                    var context = new ValidationContext(user) { MemberName = propertyName };
+                    Validator.ValidateProperty(value, context);
+
+                    return value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+        }
+
         static void Main()
         {
             while (true)
@@ -105,30 +131,6 @@ namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnno
                     default:
                         Console.WriteLine("Invalid choice.");
                         break;
-                }
-            }
-        }
-
-        static object ReadValidated(string prompt, User user, SetterDelegate setter, ParserDelegate parser, string propertyName)
-        {
-            while (true)
-            {
-                Console.Write(prompt);
-                string input = Console.ReadLine();
-
-                try
-                {
-                    object value = parser(input);
-                    setter(user, value);
-
-                    var context = new ValidationContext(user) { MemberName = propertyName };
-                    Validator.ValidateProperty(value, context);
-
-                    return value;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
                 }
             }
         }
