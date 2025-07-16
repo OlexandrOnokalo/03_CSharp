@@ -1,22 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-
 namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnnotation
 {
-    [Serializable]
     public class User
     {
-        [Range(1000, 9999, ErrorMessage = "Id must be between 1000 and 9999.")]
+        [Range(1000, 9999, ErrorMessage = "ID must be between 1000 and 9999.")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Login is required.")]
-        [RegularExpression(@"^[\w\d]+$", ErrorMessage = "Login must contain only printable characters without special symbols.")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Login must not contain special characters.")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters.")]
-        [RegularExpression(@"^[\w\d]+$", ErrorMessage = "Password must contain only printable characters without special symbols.")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Password must not contain special characters.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm password is required.")]
@@ -24,7 +22,7 @@ namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnno
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Invalid email format.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email is not valid.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Credit card is required.")]
@@ -32,118 +30,25 @@ namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnno
         public string CreditCard { get; set; }
 
         [Required(ErrorMessage = "Phone is required.")]
-        [RegularExpression(@"^\+38-0\d{5}-\d{2}-\d{2}$", ErrorMessage = "Phone must match format +38-0*****-**-**")]
+        [RegularExpression(@"^\+38-0\d{5}-\d{2}-\d{2}$", ErrorMessage = "Phone number must match +38-0*****-**-** format.")]
         public string Phone { get; set; }
 
         public override string ToString()
         {
-            return $"Id: {Id}, Login: {Login}, Email: {Email}, Phone: {Phone}, CreditCard: {CreditCard}";
+            return $"ID: {Id}, Login: {Login}, Email: {Email}, Phone: {Phone}";
         }
     }
 
-    internal class Program
+    class Program
     {
         static Dictionary<int, User> users = new Dictionary<int, User>();
         static string filePath = "users.json";
 
+        public delegate void SetterDelegate(User user, object value);
+        public delegate object ParserDelegate(string input);
 
-
-        static void AddUser()
+        static void Main()
         {
-            User user = new User();
-
-            user.Id = ReadValidated<int>("Enter Id: ", user, nameof(User.Id));
-
-            if (users.ContainsKey(user.Id))
-            {
-                Console.WriteLine("User with this Id already exists.");
-                return;
-            }
-
-            user.Login = ReadValidated<string>("Enter Login: ", user, nameof(User.Login));
-            user.Password = ReadValidated<string>("Enter Password: ", user, nameof(User.Password));
-            user.ConfirmPassword = ReadValidated<string>("Confirm Password: ", user, nameof(User.ConfirmPassword));
-            user.Email = ReadValidated<string>("Enter Email: ", user, nameof(User.Email));
-            user.CreditCard = ReadValidated<string>("Enter Credit Card (16 digits): ", user, nameof(User.CreditCard));
-            user.Phone = ReadValidated<string>("Enter Phone (+38-0*****-**-**): ", user, nameof(User.Phone));
-
-            users.Add(user.Id, user);
-            Console.WriteLine("User added successfully.");
-        }
-
-        static T ReadValidated<T>(string prompt, User user, string propertyName)
-        {
-            while (true)
-            {
-                Console.Write(prompt);
-                string input = Console.ReadLine();
-
-                try
-                {
-                    var prop = typeof(User).GetProperty(propertyName);
-                    object value = typeof(T) == typeof(int) ? int.Parse(input) : input;
-                    prop.SetValue(user, value);
-
-                    var context = new ValidationContext(user) { MemberName = propertyName };
-                    Validator.ValidateProperty(value, context);
-                    return (T)value;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-            }
-        }
-
-        static void ShowAllUsers()
-        {
-            if (users.Count == 0)
-            {
-                Console.WriteLine("User list is empty.");
-                return;
-            }
-
-            foreach (var user in users.Values)
-                Console.WriteLine(user);
-        }
-
-        static void SaveUsers()
-        {
-            try
-            {
-                string json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(filePath, json);
-                Console.WriteLine("Users saved successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error saving users: {ex.Message}");
-            }
-        }
-
-        static void LoadUsers()
-        {
-            try
-            {
-                if (!File.Exists(filePath))
-                {
-                    Console.WriteLine("File not found.");
-                    return;
-                }
-
-                string json = File.ReadAllText(filePath);
-                users = JsonSerializer.Deserialize<Dictionary<int, User>>(json);
-                Console.WriteLine("Users loaded successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading users: {ex.Message}");
-            }
-        }
-        static void Main(string[] args)
-        {
-            LoadUsers();
-
             while (true)
             {
                 Console.WriteLine("\n1 - Add User");
@@ -156,12 +61,74 @@ namespace _17_01_Attributes_2_BinarySerialize_3_XML_JsonSerialization_4_DataAnno
 
                 switch (choice)
                 {
-                    case "1": AddUser(); break;
-                    case "2": ShowAllUsers(); break;
-                    case "3": SaveUsers(); break;
-                    case "4": LoadUsers(); break;
-                    case "5": return;
-                    default: Console.WriteLine("Invalid option."); break;
+                    case "1":
+                        User user = new User();
+                        user.Id = (int)ReadValidated("Enter ID: ", user, (u, v) => u.Id = (int)v, s => int.Parse(s), nameof(User.Id));
+                        user.Login = (string)ReadValidated("Enter Login: ", user, (u, v) => u.Login = (string)v, s => s, nameof(User.Login));
+                        user.Password = (string)ReadValidated("Enter Password: ", user, (u, v) => u.Password = (string)v, s => s, nameof(User.Password));
+                        user.ConfirmPassword = (string)ReadValidated("Confirm Password: ", user, (u, v) => u.ConfirmPassword = (string)v, s => s, nameof(User.ConfirmPassword));
+                        user.Email = (string)ReadValidated("Enter Email: ", user, (u, v) => u.Email = (string)v, s => s, nameof(User.Email));
+                        user.CreditCard = (string)ReadValidated("Enter Credit Card: ", user, (u, v) => u.CreditCard = (string)v, s => s, nameof(User.CreditCard));
+                        user.Phone = (string)ReadValidated("Enter Phone: ", user, (u, v) => u.Phone = (string)v, s => s, nameof(User.Phone));
+
+                        if (!users.ContainsKey(user.Id))
+                            users.Add(user.Id, user);
+                        else
+                            Console.WriteLine("User with this ID already exists.");
+                        break;
+
+                    case "2":
+                        foreach (var u in users.Values)
+                            Console.WriteLine(u);
+                        break;
+
+                    case "3":
+                        File.WriteAllText(filePath, JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true }));
+                        Console.WriteLine("Saved to users.json");
+                        break;
+
+                    case "4":
+                        if (File.Exists(filePath))
+                        {
+                            string json = File.ReadAllText(filePath);
+                            users = JsonSerializer.Deserialize<Dictionary<int, User>>(json);
+                            Console.WriteLine("Loaded from users.json");
+                        }
+                        else
+                        {
+                            Console.WriteLine("File not found.");
+                        }
+                        break;
+
+                    case "5":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice.");
+                        break;
+                }
+            }
+        }
+
+        static object ReadValidated(string prompt, User user, SetterDelegate setter, ParserDelegate parser, string propertyName)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+
+                try
+                {
+                    object value = parser(input);
+                    setter(user, value);
+
+                    var context = new ValidationContext(user) { MemberName = propertyName };
+                    Validator.ValidateProperty(value, context);
+
+                    return value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
             }
         }
