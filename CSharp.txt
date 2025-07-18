@@ -1716,15 +1716,7 @@ Language Integrated Quary - інтегрована мова запитів, на
     Parallel LINQ (PLINQ):  используется для выполнения параллельной запросов 
 	
 	
-синтаксист запиту і синтаксиз методу
 
-	
-----select Query---
-	
-res = from elem in sourse  - схожий на форіч
-select elem;
-
-var auery = from i in arr select i; - оригінал не змінюється, працюємо з копіями
 
             // Список используемых методов расширения LINQ
 
@@ -1807,45 +1799,103 @@ LastOrDefault: выбирает последний элемент коллекц
        или возвращает значение по умолчанию
 
 
+
+синтаксист запиту і синтаксиз методу
+
+	
+----select Query---
+	
+res = from elem in sourse  - схожий на форіч
+select elem;
+
+var auery = from i in arr select i; - оригінал не змінюється, працюємо з копіями
+
+
 		!Процес відкладеного завантаження !
 - якщо зробити квері, і потім не використовувати, то власне запит не буде оброблятися. І тільки якщо використовується то повертається до квері і виконує запит
 
-IEnumerable<int> query = from i in arr select i*-1; - селект працює як ретурн, в цьому випадку кожен елемент множиться на -1
 
-Робить те саме по іншому
+синтаксист запиту:
+
+		IEnumerable<int> query = from i in arr select i*-1;
+або
+            var Query = from i in arrInt
+                        where i%2 == 0
+                        select i * -1; 
+	- селект працює як ретурн, в цьому випадку кожен елемент множиться на -1. оригінал не змінюється, працюємо з копіями
+
+синтаксиз методу
 
 	var res2 = arr.Select(item => item*-1); 
 	
 
-var Query = from i in arrInt where i%==0 
-
-	Query = arrInt.Where(item => item % 2 ==0).Select(i=>i*-1); - запитом
-	
-	- короткий запит, який вибирає якій ітем підходить під умову, і селект уже вертає елементи помножив на -1
-
-	var result2 = words.Where(word=>word.Length == 4; - якщо нічного не змінюємо то select можна не писати
+	var result2 = words.Where(word=>word.Length == 4; 		
+	- якщо нічного не змінюємо то select можна не писати
 	
 	var sortedQuery?????????????????
 
 	var sortedQuaery???????????????
 	
 	
-	Product []????????
+	            Product[] products = { 
+                new Product(){ Name = "Apple", Category ="Food"},
+                new Product(){ Name = "Phone", Category ="Tech"},
+                new Product(){ Name = "Laptop", Category ="Tech"},
+                new Product(){ Name = "Banana", Category ="Food"},
+                new Product(){ Name = "Pelmen", Category ="Food"}
+            };
+            var results = products.GroupBy(p => p.Category);
+            foreach (IGrouping<string, Product> item in results)
+            {
+                Console.Write(item.Key + " - ");
+                foreach (Product elem in item)
+                {
+                    Console.Write(elem + " ");
+                }
+                Console.WriteLine();
+            }  групування по категории, потом вывод на экран. Получается колекция обектов кколекций. Колекция категорий, обэктами которой являются продукты
+			
 
 	групування завжди словник
 	
 	Всі  вертають колекцію, крім:
 	Агрегаційні функції - вертають один результат
-	
-	count 
-	mum ?????????????
+Count: подсчитывает количество элементов коллекции, которые удовлетворяют определенному условию
+
+Sum: подсчитывает сумму числовых значений в коллекции
+
+Average: подсчитывает cреднее значение числовых значений в коллекции
+
+Min: находит минимальное значение
+
+Max: находит максимальное значение
 	
 	Sum, Average працює тільки з числами
 	
 	soft.Except(hard); - чим відрізняються хард від софта
 	
 	
-	
+            // Except -----------------------        
+            // знаходимо різницю між двома колекціями
+            //чим колекція hard відрізняється від soft
+            //result3 = soft.Except(hard);           
+            //result3 = hard.Except(soft);
+            // Intersect ---------------------------
+            // отримуємо елементи колекції А, які присутні в колекції В (без дублікатів)
+            //result3 = soft.Intersect(hard);           
+
+            // Union ---------------------------
+            // з'єднує елементи двох колекцій (без дублікатів)
+            //result3 = soft.Union(hard);
+          
+
+            // Concat -------------
+            // з'єднує елементи двох колекцій
+            //result3 = soft.Concat(hard);
+
+            // Distinct ----------------
+            // видаляє дублікати
+            result3 = soft.Distinct();
 
 
 
