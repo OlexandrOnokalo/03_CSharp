@@ -1803,8 +1803,6 @@ LastOrDefault: выбирает последний элемент коллекц
 синтаксист запиту і синтаксиз методу
 
 	
-----select Query---
-	
 res = from elem in sourse  - схожий на форіч
 select elem;
 
@@ -1824,17 +1822,11 @@ var auery = from i in arr select i; - оригінал не змінюється
                         select i * -1; 
 	- селект працює як ретурн, в цьому випадку кожен елемент множиться на -1. оригінал не змінюється, працюємо з копіями
 
-синтаксиз методу
-
-	var res2 = arr.Select(item => item*-1); 
-	
+синтаксист методу:
 
 	var result2 = words.Where(word=>word.Length == 4; 		
 	- якщо нічного не змінюємо то select можна не писати
-	
-	var sortedQuery?????????????????
 
-	var sortedQuaery???????????????
 	
 	
 	            Product[] products = { 
