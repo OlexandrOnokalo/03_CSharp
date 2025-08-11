@@ -1889,6 +1889,17 @@ Max: находит максимальное значение
             // видаляє дублікати
             result3 = soft.Distinct();
 
+========================================================
+20_
+
+UML - Unified Modeling Language
+
+проги для составления диаграм
+
+https://online.visual-paradigm.com/drive/#proj=0&dashboard
+
+https://app.diagrams.net/
+
 
 
 
