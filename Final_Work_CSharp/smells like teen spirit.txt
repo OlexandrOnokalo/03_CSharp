@@ -1,0 +1,89 @@
+От чесно, поки для мене важкодосягаємі речі. Почитав ті помилки, почав з фіналки, ніби криміналу не бачу. Поковиряв ще минулі проекти, самостійно так і не вкурив
+Дав копня копайлоту кажу покажи ці помилки. Так він знайшов всі варінти помилок що я йому запропонував X-D  
+
+Назви помилок і типу де вони є, це по мойому солюшену з всім С#
+
+
+---
+1. Long Method
+•	Final_Work_CSharp\Program.cs
+•	Main, ShowOpenDictionary, DoAddWord, DoAddTranslation, DoReplaceWord, DoReplaceTranslation, DoDeleteWord, DoDeleteTranslation, DoFindTranslations, DoExportWord — всі ці методи досить довгі, містять багато логіки, умов, циклів.  
+
+ - так а як по іншому? Якщо задачі такі треба виконати. І тут ще майже немає перевірок, з ексепшинами і далі що ми вчили код був би ще в 2 рази
+
+---
+2. Large Class
+•	Final_Work_CSharp\Program.cs
+•	Program — містить багато методів, відповідає за різні сценарії роботи з словниками.
+•	AllDictionaries — багато відповідальностей: пошук, створення, збереження, завантаження, друк.
+
+- знову ж таки, два класса з методами роботи з обєктом того класу, і купка статік не привязана до конкретного обєкта. Нашо їх розбивати, це тільки ускладнить код
+
+
+
+І так далі. Мені здається, з рівнем наших знань, і тим більше в завданнях де ми пробуєм щось нове і використовуємо хард код, по такій логіці, одна суцільна помилка. 
+
+
+
+
+ну і так далі.....
+
+
+---
+3. Primitive Obsession
+•	Final_Work_CSharp\Program.cs
+•	Використання string для імен словників, слів, перекладів замість спеціалізованих типів.
+•	14_Dictionary\Program.cs
+•	Ключі словника — просто string, хоча можна було б зробити тип для телефону.
+---
+4. Long Parameter List
+•	Final_Work_CSharp\Program.cs
+•	Деякі методи мають довгі списки параметрів, наприклад, конструктори, або методи типу ReplaceTranslation.
+---
+5. Data Clumps
+•	Final_Work_CSharp\Program.cs
+•	Часто передаються разом word, translation, list — можна згрупувати в окремий тип.
+•	08_Inheritance_Indexer\Program.cs
+•	Фігури мають багато схожих параметрів (A, B, H, C, D).
+---
+6. Alternative Classes with Different Interfaces
+•	08_Inheritance_Indexer\Program.cs
+•	Класи фігур мають різні інтерфейси, хоча всі наслідують GeometricFigure.
+---
+7. Refused Bequest
+•	08_Inheritance_Indexer\Program.cs
+•	Деякі фігури наслідують методи, які не мають сенсу для них (наприклад, GetArea для класу, де немає площі).
+---
+8. Switch Statements
+•	Final_Work_CSharp\Program.cs
+•	В Main та інших методах часто використовуються switch/if для вибору дії.
+---
+9. Temporary Field
+•	Final_Work_CSharp\Program.cs
+•	Поле lastBlocked використовується лише для передачі результату.
+---
+10. Divergent Change
+•	Final_Work_CSharp\Program.cs
+•	Клас AllDictionaries змінюється при додаванні нових функцій (збереження, завантаження, друк).
+---
+11. Parallel Inheritance Hierarchies
+•	08_Inheritance_Indexer\Program.cs
+•	Ієрархія фігур, можливо, дублюється в інших місцях.
+---
+12. Shotgun Surgery
+•	Final_Work_CSharp\Program.cs
+•	Зміна структури словника потребує змін у багатьох методах.
+---
+13. Duplicate Code
+•	02_Array\Program.cs
+•	Перевірка унікальності, пошук min/max — дублюється.
+---
+14. Lazy Class
+•	04_IntroToOOP\Freezer.cs
+•	Якщо клас має мало функціоналу, можливо, він "ледачий".
+---
+15. Speculative Generality
+•	15_02_Generics\Program.cs
+•	Деякі generic-методи, які не використовуються повністю.
+---
+
